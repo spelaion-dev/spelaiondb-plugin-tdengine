@@ -6,16 +6,15 @@
 
 use std::sync::Arc;
 
-use spelaion_driver_example::ExampleDriver;
+use spelaion_driver_tdengine::TdengineDriver;
 use spelaion_plugin_sdk::{Plugin, run};
 
 #[tokio::main]
 async fn main() {
     run(Plugin::new(
-        "spelaiondb-plugin-example",
+        "spelaiondb-plugin-tdengine",
         env!("CARGO_PKG_VERSION"),
-        // One driver per engine name this plugin serves.
-        vec![Arc::new(ExampleDriver)],
+        vec![Arc::new(TdengineDriver)],
     ))
     .await
 }

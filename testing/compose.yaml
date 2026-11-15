@@ -1,0 +1,18 @@
+# The server this plugin's tests run against.
+#
+# TDengine 3.3.6, its REST API (taosAdapter) published on 127.0.0.1:16041
+# (SPELAION_TEST_TDENGINE), with the image's own login: user `root`, password `taosdata`. Its
+# memory is capped (SpelaionDB's SDB-345): CI's runner holds every server at once.
+name: spelaiondb-plugin-tdengine-test
+
+services:
+  tdengine:
+    image: tdengine/tdengine:3.3.6.13
+    mem_limit: 1g
+    ports:
+      - "127.0.0.1:16041:6041"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf -u root:taosdata -d 'select server_version()' http://127.0.0.1:6041/rest/sql"]
+      interval: 3s
+      timeout: 5s
+      retries: 60
